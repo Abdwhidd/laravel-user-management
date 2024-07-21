@@ -1,0 +1,532 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "User Api",
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8000"
+      }
+    ],
+    "paths": {
+      "/api/user": {
+        "post": {
+          "summary": "Register new User",
+          "requestBody": {
+            "description": "User credentials for Register",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "format": "username"
+                    },
+                    "password": {
+                      "type": "string",
+                      "format": "password"
+                    },
+                    "name": {
+                      "type": "string",
+                      "format": "name"
+                    }
+                  },
+                  "examples": {
+                    "RegisterExample": {
+                      "value": {
+                        "username": "Wahid",
+                        "password": "rahasia",
+                        "name": "Abdul Wahid Kahar"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "User registered successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "username": "Wahid",
+                          "name": "Abdul Wahid Kahar"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid input"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid input"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/login": {
+        "post": {
+          "summary": "Login User",
+          "requestBody": {
+            "description": "User credentials for login",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "password": {
+                      "type": "string"
+                    }
+                  },
+                  "examples": {
+                    "LoginExample": {
+                      "value": {
+                        "username": "Wahid",
+                        "password": "rahasia"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "token": {
+                            "type": "string"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                          "user": {
+                            "id": 1,
+                            "username": "Wahid",
+                            "name": "Abdul Wahid Kahar"
+                          }
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 401,
+                          "message": "Invalid credentials"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "401": {
+              "description": "Invalid credentials",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "token": {
+                            "type": "string"
+                          },
+                          "user": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "integer"
+                              },
+                              "username": {
+                                "type": "string"
+                              },
+                              "name": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 401,
+                          "message": "Invalid credentials"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/current": {
+        "get": {
+          "summary": "Get current User",
+          "responses": {
+            "200": {
+              "description": "User details retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "username": "Wahid",
+                          "name": "Abdul Wahid Kahar"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 404,
+                          "message": "User not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "patch": {
+          "summary": "Update current User",
+          "requestBody": {
+            "description": "User details to update",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "examples": {
+                    "UpdateExample": {
+                      "value": {
+                        "username": "WahidUpdated",
+                        "name": "Abdul Wahid Kahar Updated"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "User updated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "username": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "username": "WahidUpdated",
+                          "name": "Abdul Wahid Kahar Updated"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid update details"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/user/logout": {
+        "delete": {
+          "summary": "Logout current User",
+          "responses": {
+            "200": {
+              "description": "User logged out successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "message": "Logged out successfully"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 500,
+                          "message": "Logout failed"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }

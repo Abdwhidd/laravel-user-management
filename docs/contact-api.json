@@ -1,0 +1,602 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "title": "Contact API",
+      "version": "1.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:8000"
+      }
+    ],
+    "paths": {
+      "/api/contact": {
+        "post": {
+          "summary": "Create a new contact",
+          "requestBody": {
+            "description": "Contact information to create",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string",
+                      "description": "First name of the contact"
+                    },
+                    "last_name": {
+                      "type": "string",
+                      "description": "Last name of the contact"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "description": "Email address of the contact"
+                    },
+                    "phone": {
+                      "type": "string",
+                      "description": "Phone number of the contact"
+                    }
+                  },
+                  "required": [
+                    "first_name",
+                    "last_name",
+                    "email",
+                    "phone"
+                  ],
+                  "examples": {
+                    "ContactExample": {
+                      "value": {
+                        "first_name": "John",
+                        "last_name": "Doe",
+                        "email": "john.doe@example.com",
+                        "phone": "+1234567890"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Contact created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "first_name": "John",
+                          "last_name": "Doe",
+                          "email": "john.doe@example.com",
+                          "phone": "+1234567890"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid input"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid input"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/contact/{id}": {
+        "get": {
+          "summary": "Get a contact by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact retrieved successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "first_name": "John",
+                          "last_name": "Doe",
+                          "email": "john.doe@example.com",
+                          "phone": "+1234567890"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 404,
+                          "message": "Contact not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Contact not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 404,
+                          "message": "Contact not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Update a contact by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Contact information to update",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "first_name": {
+                      "type": "string"
+                    },
+                    "last_name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "phone": {
+                      "type": "string"
+                    }
+                  },
+                  "examples": {
+                    "UpdateExample": {
+                      "value": {
+                        "first_name": "Jane",
+                        "last_name": "Doe",
+                        "email": "jane.doe@example.com",
+                        "phone": "+0987654321"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Contact updated successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "id": 1,
+                          "first_name": "Jane",
+                          "last_name": "Doe",
+                          "email": "jane.doe@example.com",
+                          "phone": "+0987654321"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid update details"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid update details",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer"
+                          },
+                          "first_name": {
+                            "type": "string"
+                          },
+                          "last_name": {
+                            "type": "string"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "phone": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 400,
+                          "message": "Invalid update details"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete a contact by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "integer"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Contact deleted successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "success": {
+                      "value": {
+                        "data": {
+                          "message": "Contact deleted successfully"
+                        },
+                        "errors": {}
+                      }
+                    },
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 404,
+                          "message": "Contact not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Contact not found",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "data": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "errors": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "integer"
+                          },
+                          "message": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "examples": {
+                    "error": {
+                      "value": {
+                        "data": {},
+                        "errors": {
+                          "code": 404,
+                          "message": "Contact not found"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
