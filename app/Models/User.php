@@ -14,6 +14,12 @@ class User extends Model
     public $timestamps = true;
     public $incrementting = true;
 
+    protected $fillable = [
+        'username',
+        'password',
+        'name'
+    ];
+
     public function contacts(): HasMany {
         return $this->hasMany(User::class, 'user_id', 'id');
     }
